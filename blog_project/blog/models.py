@@ -8,7 +8,7 @@ class Post(models.Model):
         PUBLISHED = 'PB', 'Published'
 
     title = models.CharField(max_length=250)
-    slug = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250)
     body = models.TextField()
     status = models.CharField(max_length=2, choices=Status, default=Status.DRAFT)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='blog_posts')
