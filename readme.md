@@ -16,7 +16,7 @@ Model choice fields\
 Model default ordering\
 Modify detail URL to use some other fields instead of id\
 Pagination\
-Postgres search vector and other search capabilitise\
+Postgres search vector and other search capabilities\
 Sitemap\
 SMTP email configuration\
 Use default User model as foreign key\
