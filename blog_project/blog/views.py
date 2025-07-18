@@ -60,6 +60,7 @@ def post_share(request, post_id):
 
     return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
 
+
 @require_POST
 def post_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
