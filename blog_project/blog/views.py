@@ -1,14 +1,16 @@
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.http import require_POST
 from django.views.generic import ListView
 
-from blog.forms import EmailPostForm
+from blog.forms import CommentForm, EmailPostForm
 from blog.models import Post
+
 
 def post_list(request):
     post_list = Post.published.all()
-    paginator = Paginator(post_list, 1)
+    paginator = Paginator(post_list, 3)
     page_number = request.GET.get('page', 1)
     try:
         posts = paginator.page(page_number)
@@ -17,6 +19,7 @@ def post_list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     return render(request, 'blog/post/list.html', {'posts': posts})
+
 
 def post_detail(request, year, month, day, post):
     post = get_object_or_404(
@@ -27,13 +30,17 @@ def post_detail(request, year, month, day, post):
         publish__month=month,
         publish__day=day
     )
-    return render(request, 'blog/post/detail.html', {'post': post})
+    comments = post.comments.filter(active=True)
+    form = CommentForm()
+    return render(request, 'blog/post/detail.html', {'post': post, 'comments': comments, 'form': form})
+
 
 class PostListView(ListView):
     queryset = Post.published.all()
     context_object_name = 'posts'
-    paginate_by = 1
+    paginate_by = 3
     template_name = 'blog/post/list.html'
+
 
 def post_share(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
@@ -52,3 +59,16 @@ def post_share(request, post_id):
         form = EmailPostForm()
 
     return render(request, 'blog/post/share.html', {'post': post, 'form': form, 'sent': sent})
+
+@require_POST
+def post_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
+    comment = None
+    form = CommentForm(data=request.POST)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+
+    return render(request, 'blog/post/comment.html', {'post': post, 'form': form, 'comment': comment})
