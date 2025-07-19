@@ -10,6 +10,30 @@
 <body>
   <div id="header">
     <span class="logo">Bookmarks</span>
+    {% if request.user.is_authenticated %}
+    <ul class="menu">
+      <li class="{% if section == 'dashboard' %}selected{% endif %}">
+        <a href="{% url 'dashboard' %}">My dashboard</a>
+      </li>
+      <li class="{% if section == 'images' %}selected{% endif %}">
+        <a href="#">Images</a>
+      </li>
+      <li class="{% if section == 'people' %}selected{% endif %}">
+        <a href="#">People</a>
+      </li>
+    </ul>
+    {% endif %}
+    <span class="user">
+      {% if request.user.is_authenticated %}
+      Hello {{ request.user.first_name|default:request.user.username }},
+      <form action="{% url 'logout' %}" method="post">
+        <button type="submit">Logout</button>
+        {% csrf_token %}
+      </form>
+      {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      {% endif %}
+    </span>
   </div>
   <div id="content">
     {% block content %}
