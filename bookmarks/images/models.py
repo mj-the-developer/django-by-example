@@ -13,16 +13,20 @@ class Image(models.Model):
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='images_liked', blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
+
     class Meta:
         ordering = ['-created']
         indexes = [
             models.Index(fields=['-created']),
         ]
 
+
     def __str__(self):
         return self.title
     
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+
         super().save(*args, **kwargs)
