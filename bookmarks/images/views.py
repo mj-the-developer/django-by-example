@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 
 from images.forms import ImageCreateForm
@@ -7,7 +8,7 @@ from images.models import Image
 
 
 @login_required
-def image_create(request):
+def image_create(request: HttpRequest):
     if request.method == 'POST':
         form = ImageCreateForm(data=request.POST)
         if form.is_valid():
@@ -22,6 +23,6 @@ def image_create(request):
     return render(request, 'images/image/create.html', {'section': 'images', 'form': form})
 
 
-def image_detail(request, id, slug):
+def image_detail(request: HttpRequest, id: int, slug: str):
     image = get_object_or_404(Image, id=id, slug=slug)
     return render(request, 'images/image/detail.html', {'secion': 'images', 'image': image})
