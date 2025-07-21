@@ -1,3 +1,6 @@
+import redis
+
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -8,6 +11,9 @@ from django.views.decorators.http import require_POST
 from images.forms import ImageCreateForm
 from images.models import Image
 from actions.utils import create_action
+
+
+r = redis.Redis(host=settings.REDIS_HOST, port=settings.REDIS_PORT, db=settings.REDIS_DB)
 
 
 @login_required
@@ -29,7 +35,8 @@ def image_create(request: HttpRequest):
 
 def image_detail(request: HttpRequest, id: int, slug: str):
     image = get_object_or_404(Image, id=id, slug=slug)
-    return render(request, 'images/image/detail.html', {'secion': 'images', 'image': image})
+    total_views = r.incr(f"image:{id}:views")
+    return render(request, 'images/image/detail.html', {'secion': 'images', 'image': image, 'total_views': total_views})
 
 
 @login_required
