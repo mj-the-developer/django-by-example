@@ -13,12 +13,14 @@ class Image(models.Model):
     description = models.TextField(blank=True)
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='images_liked', blank=True)
     created = models.DateTimeField(auto_now_add=True)
+    total_likes = models.PositiveIntegerField(default=0)
 
 
     class Meta:
         ordering = ['-created']
         indexes = [
             models.Index(fields=['-created']),
+            models.Index(fields=['-total_likes']),
         ]
 
 
