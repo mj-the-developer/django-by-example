@@ -1,3 +1,4 @@
+from typing import override
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
@@ -30,4 +31,8 @@ def cart_remove(request: HttpRequest, product_id: int):
 
 def cart_detail(request: HttpRequest):
     cart = Cart(request)
+
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'override': True})
+
     return render(request, 'cart/detail.html', {'cart': cart})
