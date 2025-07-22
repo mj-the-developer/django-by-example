@@ -35,6 +35,7 @@ Many to many relationships (with and without manually pivot table creation)\
 Messages framework\
 Model with image field\
 Override get_absolute_url for bulit-in models\
+Redis\
 Serve static files in development\
 Serve django site under https\
 Social auth\
@@ -42,8 +43,16 @@ Use console for email output\
 Use JsonResponse and AJAX\
 Use built-in signals\
 
+## Online shop
+
+Cart\
+Context processors\
+Session\
+TabularInline in admin site\
+
 ## Useful libraries
 
+celery\
 django-anymail\
 django-debug-toolbar\
 django-extensions (for https on localhost)\
