@@ -1,9 +1,9 @@
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-import stripe.error
-from orders.models import Order
 import stripe
+
+from orders.models import Order
 
 
 @csrf_exempt
@@ -28,6 +28,7 @@ def stripe_webhook(request: HttpRequest):
                 return HttpResponse(status=404)
             
             order.paid = True
+            order.stripe_id = session.payment_intent
             order.save()
     
     return HttpResponse(status=200)
