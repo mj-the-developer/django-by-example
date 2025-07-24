@@ -4,6 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 import stripe
 
 from orders.models import Order
+from shop.models import Product
+from shop.recommender import Recommender
 from payment.tasks import payment_completed
 
 
@@ -31,6 +33,11 @@ def stripe_webhook(request: HttpRequest):
             order.paid = True
             order.stripe_id = session.payment_intent
             order.save()
+
+            product_ids = order.items.values_list('product_id')
+            products = Product.objects.filter(id__in=product_ids)
+            r = Recommender()
+            r.products_bought(products)
     
     payment_completed.delay(order.id)
     return HttpResponse(status=200)
