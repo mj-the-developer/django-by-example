@@ -1,7 +1,11 @@
 import csv
 import datetime
+from typing import Any
+
 from django.contrib import admin
+from django.db.models.query import QuerySet
 from django.http import HttpRequest, HttpResponse
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 from orders.models import Order, OrderItem
@@ -13,14 +17,12 @@ class OrderItemInline(admin.TabularInline):
 
 
 @admin.action(description='Export to CSV')
-def export_to_csv(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset):
-    opts = modeladmin.model._meta
-    content_disposition = f"attachment; filename={opts.verbose_name}.csv"
+def export_to_csv(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset: QuerySet[Any]):
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = content_disposition
+    response['Content-Disposition'] = f"attachment; filename={modeladmin.opts.verbose_name}.csv"
     writer = csv.writer(response)
 
-    fields = [field for field in opts.get_fields() if not field.many_to_many and not field.one_to_many]
+    fields = [field for field in modeladmin.opts.get_fields() if not field.many_to_many and not field.one_to_many]
     writer.writerow([field.verbose_name for field in fields])
 
     for obj in queryset:
@@ -35,12 +37,17 @@ def export_to_csv(modeladmin: admin.ModelAdmin, request: HttpRequest, queryset):
     return response
 
 
-def stripe_payment_url(obj):
+def stripe_payment_url(obj: Order):
     url = obj.get_stripe_url()
     if obj.stripe_id:
         html = f'<a href="{url}" target="_blank">{obj.stripe_id}</a>'
         return mark_safe(html)
     return ''
+
+
+def order_detail(obj: Order):
+    url = reverse('orders:admin_order_detail', args=[obj.id])
+    return mark_safe(f'<a href="{url}">View</a>')
 
 
 @admin.register(Order)
@@ -50,13 +57,12 @@ class OrderAdmin(admin.ModelAdmin):
         'first_name',
         'last_name',
         'email',
-        'address',
         'postal_code',
         'city',
         'paid',
         stripe_payment_url,
         'created',
-        'updated'
+        order_detail,
     ]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
