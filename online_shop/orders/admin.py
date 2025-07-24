@@ -50,6 +50,11 @@ def order_detail(obj: Order):
     return mark_safe(f'<a href="{url}">View</a>')
 
 
+def invoice(obj: Order):
+    url = reverse('orders:admin_order_pdf', args=[obj.id])
+    return mark_safe(f'<a href="{url}" target="_blank">PDF</a>')
+
+
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = [
@@ -63,6 +68,7 @@ class OrderAdmin(admin.ModelAdmin):
         stripe_payment_url,
         'created',
         order_detail,
+        invoice,
     ]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
