@@ -3,6 +3,7 @@ from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
+from shop.recommender import Recommender
 from shop.models import Product
 from cart.cart import Cart
 from cart.forms import CartAddProductForm
@@ -37,4 +38,16 @@ def cart_detail(request: HttpRequest):
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'override': True})
 
-    return render(request, 'cart/detail.html', {'cart': cart, 'coupon_apply_form': coupon_apply_form})
+    r = Recommender()
+    cart_products = [item['product'] for item in cart]
+
+    if cart_products:
+        recommended_products = r.suggest_products_for(cart_products, max_results=4)
+    else:
+        recommended_products = []
+
+    return render(request, 'cart/detail.html', {
+        'cart': cart,
+        'coupon_apply_form': coupon_apply_form,
+        'recommended_products': recommended_products
+    })
