@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-25 09:46+0330\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2025-07-25 10:13+0330\n"
+"PO-Revision-Date: 2025-07-25 06:47+0000\n"
+"Last-Translator:   <mojtaba.namazi.ghamsari@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"X-Translated-Using: django-rosetta 0.10.0\n"
 
 #: cart/forms.py:9
 msgid "Quantity"
@@ -27,13 +27,41 @@ msgstr ""
 msgid "Coupon"
 msgstr ""
 
-#: online_shop/settings.py:106
+#: online_shop/settings.py:107
 msgid "English"
 msgstr "Inglés"
 
-#: online_shop/settings.py:107
+#: online_shop/settings.py:108
 msgid "Spanish"
 msgstr "Español"
+
+#: online_shop/urls.py:11
+msgid "cart/"
+msgstr "carro/"
+
+#: online_shop/urls.py:12
+msgid "orders/"
+msgstr "pedidos/"
+
+#: online_shop/urls.py:13
+msgid "payment/"
+msgstr "pago/"
+
+#: online_shop/urls.py:14
+msgid "coupons/"
+msgstr "igialo/"
+
+#: payment/urls.py:11
+msgid "process/"
+msgstr "procesar/"
+
+#: payment/urls.py:12
+msgid "completed/"
+msgstr "completado/"
+
+#: payment/urls.py:13
+msgid "canceled/"
+msgstr "cancelado\\"
 
 #: shop/templates/shop/base.html:7 shop/templates/shop/base.html:13
 msgid "My shop"
