@@ -45,10 +45,28 @@ Use built-in signals\
 
 ## Online shop
 
+Admin custom actions\
+Admin custom columns\
+Admin custom detail page\
 Cart\
+Celery\
 Context processors\
+CSV\
+Export\
+Flower\
+Internationalization\
+Localization\
+Model fields validators\
+PDF\
+Recommended engine\
+Redis\
+Rosetta\
+Send email with attachment\
 Session\
+Stripe\
 TabularInline in admin site\
+Use request.build_absolute_uri to build app related URLs\
+Webhooks\
 
 ## Useful libraries
 
@@ -56,7 +74,13 @@ celery\
 django-anymail\
 django-debug-toolbar\
 django-extensions (for https on localhost)\
+django-import-export\
+django-import-export-celery\
+django-localflavor\
+django-parler\
+django-rosetta\
 easy-thumbnails\
+flower\
 pillow\
 psycopg\
 pyOpenSSL (for https on localhost)\
@@ -64,4 +88,11 @@ pysocks\
 python-decouple\
 requests\
 social-auth-app-django\
+stripe\
+weasyprint\
 werkzeug (for https on localhost)\
+
+## Useful OS related libraries
+
+gettext (for django translation)
+poedit (for visual translation of .po files)
