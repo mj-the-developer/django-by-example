@@ -68,6 +68,17 @@ TabularInline in admin site\
 Use request.build_absolute_uri to build app related URLs\
 Webhooks\
 
+## Education
+
+Abstract model\
+Built-in permissions\
+Class based views\
+Custom model fields\
+Dynamic forms with form factories\
+Fixtures\
+Formsets\
+StackedInline in admin site\
+
 ## Useful libraries
 
 celery\
@@ -81,6 +92,7 @@ django-parler\
 django-rosetta\
 easy-thumbnails\
 flower\
+neapolitan for compressed views\
 pillow\
 psycopg\
 pyOpenSSL (for https on localhost)\
