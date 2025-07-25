@@ -70,3 +70,43 @@ Module {{ module.order|add:1 }}: {{ module.title }}
 </div>
 {% endwith %}
 {% endblock %}
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5sortable/0.13.3/html5sortable.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    var options = {
+      method: 'POST',
+      mode: 'same-origin'
+    }
+    const moduleOrderUrl = '{% url "course:module_order" %}';
+
+    sortable('#modules', {
+      forcePlaceholderSize: true,
+      placeholderClass: 'placeholder'
+    })[0].addEventListener('sortupdate', function (e) {
+      modulesOrder = {};
+      var modules = document.querySelectorAll('#modules li');
+      modules.forEach(function (module, index) {
+        modulesOrder[module.dataset.id] = index;
+        module.querySelector('.order').innerHTML = index + 1;
+      });
+      options['body'] = JSON.stringify(modulesOrder);
+      fetch(moduleOrderUrl, options)
+    });
+
+    const contentOrderUrl = '{% url "course:content_order" %}';
+    sortable('#module-contents', {
+      forcePlaceholderSize: true,
+      placeholderClass: 'placeholder'
+    })[0].addEventListener('sortupdate', function (e) {
+      contentOrder = {};
+      var contents = document.querySelectorAll('#module-contents div');
+      contents.forEach(function (content, index) {
+        contentOrder[content.dataset.id] = index;
+      });
+      options['body'] = JSON.stringify(contentOrder);
+      fetch(contentOrderUrl, options)
+    });
+  });
+</script>
+{% endblock %}
