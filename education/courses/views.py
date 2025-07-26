@@ -1,4 +1,5 @@
 from django.apps import apps
+from django.core.cache import cache
 from django.db.models import Count, Model
 from django.forms.models import modelform_factory
 from django.http import HttpRequest
@@ -139,7 +140,10 @@ class CourseListView(TemplateResponseMixin, View):
     template_name = 'courses/course/list.html'
 
     def get(self, request: HttpRequest, subject=None):
-        subjects = Subject.objects.annotate(total_courses=Count('courses'))
+        subjects = cache.get('all_subjects')
+        if not subjects:
+            subjects = Subject.objects.annotate(total_courses=Count('courses'))
+            cache.set('all_subjects', subjects)
         courses = Course.objects.annotate(total_modules=Count('modules'))
 
         if (subject):
