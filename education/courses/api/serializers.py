@@ -1,7 +1,7 @@
 from django.db.models import Count
 from rest_framework import serializers
 
-from courses.models import Course, Module, Subject
+from courses.models import Content, Course, ItemBase, Module, Subject
 
 
 class SubjectSerializer(serializers.ModelSerializer):
@@ -29,3 +29,16 @@ class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = ['id', 'subject', 'title', 'slug', 'overview', 'created', 'owner', 'modules']
+
+
+class ItemRelatedField(serializers.RelatedField):
+    def to_representation(self, value: ItemBase):
+        return value.render()
+
+
+class ContentSerializer(serializers.ModelSerializer):
+    item = ItemRelatedField(read_only=True)
+
+    class Meta:
+        model = Content
+        fields = ['order', 'item']
