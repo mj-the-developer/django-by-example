@@ -71,33 +71,81 @@ Webhooks\
 ## Education
 
 Abstract model\
+Authenticate and login new registered user in views\
 Built-in permissions\
+Built-in user creation form\
+Caching\
 Class based views\
+CSRF exempt mixin\
 Custom model fields\
+Debug toolbar\
 Dynamic forms with form factories\
 Fixtures\
+Form model choice field\
 Formsets\
+HTML5 drag & drop\
+JSON request/response mixin\
+Manipulate context data in class based views\
+Memcached\
+Model rendering method\
+Redis as cache backend\
+Rest API\
 StackedInline in admin site\
+
+## Education (Rest API)
+
+Basic authentication\
+Custom action for viewsets\
+Custom API view\
+Custom attribute\
+Custom permissions\
+Generic API views\
+Method field attribute\
+Nested serializers\
+Pagination\
+Router\
+Model serializers\
+Related field serializers\
+Use StringRelatedField to serialize relationships\
+Viewsets\
+
+## Education WebSocket
+
+Add routing to handle websockets alongside http requests\
+Channels\
+Consumers\
+Create chat groups with channel layer\
+Redis as a channel layer\
+Safe way to use python objects in javascript with json_script filter\
 
 ## Useful libraries
 
 celery\
+channels[daphne]\
+channels-redis\
 django-anymail\
+django-braces\
 django-debug-toolbar\
+django-embed-video\
 django-extensions (for https on localhost)\
 django-import-export\
 django-import-export-celery\
 django-localflavor\
+django-nh3\
 django-parler\
+django-redis-board\
 django-rosetta\
+djangorestframework\
 easy-thumbnails\
 flower\
 neapolitan for compressed views\
 pillow\
 psycopg\
+pymemcache\
 pyOpenSSL (for https on localhost)\
 pysocks\
 python-decouple\
+redis\
 requests\
 social-auth-app-django\
 stripe\
@@ -106,5 +154,5 @@ werkzeug (for https on localhost)\
 
 ## Useful OS related libraries
 
-gettext (for django translation)
-poedit (for visual translation of .po files)
+gettext (for django translation)\
+poedit (for visual translation of .po files)\
